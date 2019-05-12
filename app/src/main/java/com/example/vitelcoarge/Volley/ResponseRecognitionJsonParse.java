@@ -23,6 +23,7 @@ public class ResponseRecognitionJsonParse extends GetRecognitionResponseModel {
     List<Integer> listOfAttributeOrderId;
     List<Integer> listOfProductCost;
     List<Integer> listOfProductOrderId;
+    List<String> listOfProductArticle;
     private int count;
 
     String responseAttributes;
@@ -44,6 +45,7 @@ public class ResponseRecognitionJsonParse extends GetRecognitionResponseModel {
         listOfAttributeOrderId=new ArrayList<>();
         listOfProductCost=new ArrayList<>();
         listOfProductOrderId=new ArrayList<>();
+        listOfProductArticle=new ArrayList<>();
 
         JSONArray jsonResponseArray = new JSONArray(products);
         JSONObject jsonResponseObject;
@@ -53,6 +55,7 @@ public class ResponseRecognitionJsonParse extends GetRecognitionResponseModel {
             String productName = jsonResponseObject.getString("name");
             Integer productOrderId=jsonResponseObject.getInt("orderId");
             Integer productCost=jsonResponseObject.getInt("cost");
+            String productArtcile =jsonResponseObject.getString("article");
             listOfProductName.add(productName);
             listOfProductId.add(count);
             listOfProductOrderId.add(productOrderId);
@@ -85,6 +88,7 @@ public class ResponseRecognitionJsonParse extends GetRecognitionResponseModel {
             listOfAttributesId.add(attributeId);
             listOfAttributeProductId.add(attributesProductId);
             listOfAttributeOrderId.add(attributesOrderId);
+            listOfProductArticle.add(productArtcile);
 
 
 
@@ -99,7 +103,7 @@ public class ResponseRecognitionJsonParse extends GetRecognitionResponseModel {
         setAttributesProductId(listOfAttributeProductId);
         setProductCost(productCost);
         setProductOrderId(productOrderId);
-
+setProductArticle(productArticle);
 
 
 

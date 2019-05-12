@@ -84,4 +84,14 @@ public static List<Integer> productCost;
 
     public static List<Integer> productOrderId;
 
+    public static List<String> getProductArticle() {
+        return productArticle;
+    }
+
+    public static void setProductArticle(List<String> productArticle) {
+        GetRecognitionResponseModel.productArticle = productArticle;
+    }
+
+    public static List<String> productArticle;
+
 }
