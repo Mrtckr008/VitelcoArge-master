@@ -19,6 +19,10 @@ public class ResponseRecognitionJsonParse extends GetRecognitionResponseModel {
     List<String> listOfAttributesName;
     List<String> listOfAttributesValue;
     List<Integer> listOfAttributesId;
+    List<Integer> listOfAttributeProductId;
+    List<Integer> listOfAttributeOrderId;
+    List<Integer> listOfProductCost;
+    List<Integer> listOfProductOrderId;
     private int count;
 
     String responseAttributes;
@@ -36,6 +40,10 @@ public class ResponseRecognitionJsonParse extends GetRecognitionResponseModel {
         listOfAttributesName = new ArrayList<>();
         listOfAttributesValue = new ArrayList<>();
         listOfAttributesId =new ArrayList<>();
+        listOfAttributeProductId=new ArrayList<>();
+        listOfAttributeOrderId=new ArrayList<>();
+        listOfProductCost=new ArrayList<>();
+        listOfProductOrderId=new ArrayList<>();
 
         JSONArray jsonResponseArray = new JSONArray(products);
         JSONObject jsonResponseObject;
@@ -43,27 +51,40 @@ public class ResponseRecognitionJsonParse extends GetRecognitionResponseModel {
         for (count = 0; count < jsonResponseArray.length(); count++) {
             jsonResponseObject = jsonResponseArray.getJSONObject(count);
             String productName = jsonResponseObject.getString("name");
+            Integer productOrderId=jsonResponseObject.getInt("orderId");
+            Integer productCost=jsonResponseObject.getInt("cost");
             listOfProductName.add(productName);
             listOfProductId.add(count);
+            listOfProductOrderId.add(productOrderId);
+            listOfProductCost.add(productCost);
 
             JSONArray jsonObjectAttributes= new JSONArray(products);
             responseAttributes = jsonObjectAttributes.getString(count);
 
             JSONObject jsonAttributes=new JSONObject(responseAttributes);
             responseAttributeByOne=jsonAttributes.getString("attributes");
+
+
           //  listOfAttributes.add(responseAttributeByOne);
 
             JSONArray jsonAttributesByOne= new JSONArray(responseAttributeByOne);
             String responseAttributeByOne=jsonAttributesByOne.getString(0);
 
             JSONObject responseEachAttribute=new JSONObject(responseAttributeByOne);
+
+
             String attributesName=responseEachAttribute.getString("name");
-            String AttributeValue=responseEachAttribute.getString("value");
-            Integer AttributeId=responseEachAttribute.getInt("id");
+            String attributeValue=responseEachAttribute.getString("value");
+            Integer attributeId=responseEachAttribute.getInt("id");
+            Integer attributesProductId=responseEachAttribute.getInt("productId");
+            Integer attributesOrderId=responseEachAttribute.getInt("orderId");
+
 
             listOfAttributesName.add(attributesName);
-            listOfAttributesValue.add(AttributeValue);
-            listOfAttributesId.add(AttributeId);
+            listOfAttributesValue.add(attributeValue);
+            listOfAttributesId.add(attributeId);
+            listOfAttributeProductId.add(attributesProductId);
+            listOfAttributeOrderId.add(attributesOrderId);
 
 
 
@@ -74,6 +95,10 @@ public class ResponseRecognitionJsonParse extends GetRecognitionResponseModel {
         setAttributesId(listOfAttributesId);
         setAttributesName(listOfAttributesName);
         setAttributesValue(listOfAttributesValue);
+        setAttributesOrderId(listOfAttributeOrderId);
+        setAttributesProductId(listOfAttributeProductId);
+        setProductCost(productCost);
+        setProductOrderId(productOrderId);
 
 
 
