@@ -3,8 +3,10 @@ package com.example.vitelcoarge.Volley;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -21,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.vitelcoarge.Local.LocalDatabase;
 import com.example.vitelcoarge.Model.GetTokenResponseModel;
 import com.example.vitelcoarge.Model.ImageModel;
+import com.example.vitelcoarge.Model.LoginModel;
 import com.example.vitelcoarge.PostActivityAfterRecognition;
 
 import org.json.JSONException;
@@ -39,21 +42,30 @@ public class PostImageRecognitionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        convertToBase64();
         PostImageVolley();
+    }
+
+    private void convertToBase64() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ImageModel.getImageBitmap().compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        ImageModel.setImageBase64(Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT));
+        Log.i("Base64:..",ImageModel.getImageBase64());
     }
 
 
     public void PostImageVolley() {
-        Bitmap bitmap;
-        Intent intent = getIntent();
-        bitmap = (Bitmap) intent.getParcelableExtra("captureImage");
-        ImageModel imageModel=new ImageModel();
-        ImageModel.setImageBitmap(bitmap);
         Log.e("Set edildi..","..");
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         final JSONObject jsonBodyObj = new JSONObject();
         String url = "http://imagereconginitonwebapi-dev.us-west-2.elasticbeanstalk.com/api/v1/Product/FindProduct";
+        try{
+            jsonBodyObj.put("imageBaseString", ImageModel.getImageBase64());
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
         final String requestBody = jsonBodyObj.toString();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST,
@@ -66,8 +78,8 @@ public class PostImageRecognitionActivity extends AppCompatActivity {
 
                 ResponseRecognitionJsonParse responseRecognitionJsonParse= new ResponseRecognitionJsonParse(String.valueOf(responseRecognition));
 
-                Log.i("Response: ",responseRecognitionJsonParse.listOfAttributesId.get(0).toString());
-
+                Log.i("Response:.. ",responseRecognitionJsonParse.listOfAttributesId.get(0).toString());
+                Log.i("Response:,, ",responseRecognition.toString());
 
 
                 Intent intent=new Intent(PostImageRecognitionActivity.this, PostActivityAfterRecognition.class);
@@ -96,8 +108,8 @@ public class PostImageRecognitionActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer "+ GetTokenResponseModel.getToken());
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1NTg2MTQ3NjksImV4cCI6MTU1OTIxOTU2OSwiaWF0IjoxNTU4NjE0NzY5fQ.znN9GhxmbqI3fQg-pU7rZs4Hvy_TPV_cEd_OnvsIpRk");
                 return headers;
             }
 

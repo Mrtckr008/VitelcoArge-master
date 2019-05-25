@@ -2,6 +2,7 @@ package com.example.vitelcoarge.LoginController;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -31,7 +33,7 @@ import com.example.vitelcoarge.Volley.PostTokenActivity;
 public class LoginActivity extends AppCompatActivity {
     private static final int MY_CAMERA_REQUEST_CODE = 100;
     EditText name,password;
-    Boolean connectionStatus;
+    public Boolean connectionStatus;
     Button button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,37 +49,32 @@ public class LoginActivity extends AppCompatActivity {
                     MY_CAMERA_REQUEST_CODE);
         }
 
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        cm.getActiveNetworkInfo();
 
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        Boolean b=netInfo != null && netInfo.isConnectedOrConnecting();
-Boolean bb=isOnline();
-        Log.e("Connection status is",bb.toString());
-
-            ConstraintLayout constraintLayout = findViewById(R.id.login_layout);
-            Snackbar.make(constraintLayout, "Please check your connection", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Check connection settings!", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent=new Intent(Settings.ACTION_WIRELESS_SETTINGS);
-                            startActivity(intent);
-
-                        }
-                    } )
-                    .show();
-
+      //  Log.e("Connection status is",connectionStatus.toString());
 
             //Intent intent=new Intent(Settings.ACTION_WIRELESS_SETTINGS);
             //startActivity(intent);
             //finish();
-
-
-
-        new CountDownTimer(10000,1000){
+        new CountDownTimer(100000,10000){
             @Override
             public void onTick(long millisUntilFinished) {
+                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                connectivityManager.getActiveNetworkInfo();
 
+                NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
+                connectionStatus=isOnline();
+                if(connectionStatus==false){
+                    ConstraintLayout constraintLayout = findViewById(R.id.login_layout);
+                    Snackbar.make(constraintLayout, "Trying to connect...", Snackbar.LENGTH_INDEFINITE)
+                            .setAction("Check connection settings.", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent=new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                                    startActivity(intent);
+                                }
+                            } )
+                            .show();
+                }
 
 
             }
@@ -89,16 +86,40 @@ Boolean bb=isOnline();
         }.start();
 
 
+
+
+
       checkUserActive();
     }
 
 
 
     public void checkUserActive(){
+
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String tokenValue= preferences.getString("savedToken", "-1");
 
         if(!tokenValue.equals("-1")){
+            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            connectivityManager.getActiveNetworkInfo();
+
+            NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
+            connectionStatus=isOnline();
+            if(connectionStatus==false){
+                new AlertDialog.Builder(this)
+                        .setTitle("Connection Problem")
+                        .setMessage("Want to check your internet connection?")
+
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent=new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("No", null)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
@@ -106,17 +127,77 @@ Boolean bb=isOnline();
     }
 
     public void logIn(View view) {
+
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        connectivityManager.getActiveNetworkInfo();
+
+        new CountDownTimer(100000,10000){
+            @Override
+            public void onTick(long millisUntilFinished) {
+                ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+                connectivityManager.getActiveNetworkInfo();
+
+                NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
+                connectionStatus=isOnline();
+                if(connectionStatus==false){
+                    ConstraintLayout constraintLayout = findViewById(R.id.login_layout);
+                    Snackbar.make(constraintLayout, "Trying to connect...", Snackbar.LENGTH_INDEFINITE)
+                            .setAction("Check connection settings.", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent=new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                                    startActivity(intent);
+                                }
+                            } )
+                            .show();
+                }
+
+
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        }.start();
+
+
+
+
+        NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
+        connectionStatus=isOnline();
+        if(connectionStatus==false){
+            new AlertDialog.Builder(this)
+                    .setTitle("Connection Problem")
+                    .setMessage("Want to check your internet connection?")
+
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent=new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+                            startActivity(intent);
+                        }
+                    })
+                    .setNegativeButton("No", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
+
+        else{
         if(name.getText().toString().equals("root-sa")&&password.getText().toString().equals("123")){
+
             Intent intent = new Intent(getApplicationContext(), PostTokenActivity.class);
             LoginModel.setUsername(name.getText().toString());
             LoginModel.setPassword(password.getText().toString());
+
             startActivity(intent);
             finish();
         }
         else if(!name.getText().toString().equals("root-sa")||!password.getText().toString().equals("123")){
             Toast.makeText(getApplicationContext(), Html.fromHtml("<b>Please check your user information!</b>"), Toast.LENGTH_LONG).show();
         }
-    }
+    }}
+
     public boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

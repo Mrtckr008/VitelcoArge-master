@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.Image;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +25,7 @@ import static com.example.vitelcoarge.Model.GetRecognitionResponseModel.getAttri
 import static com.example.vitelcoarge.Model.GetRecognitionResponseModel.getProductName;
 
 public class PostActivityAfterRecognition extends AppCompatActivity {
-    Bitmap bitmap;
+
     Button item1,item2,item3,item4;
     RadioButton radioItem1,radioItem2,radioItem3,radioItem4;
     HorizontalScrollView horizontalScrollAttributesName,horizontalScrollAttributesType;
@@ -36,44 +37,41 @@ public class PostActivityAfterRecognition extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
- //       ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.post_activity);
-   //     ConstraintSet set = new ConstraintSet();
-     //   set.clone(layout);
-       imageCapture=findViewById(R.id.imageView5);
-       Bitmap captureImageBitmap= ImageModel.getImageBitmap();
-       imageCapture.setImageBitmap(captureImageBitmap);
-       attributesName=findViewById(R.id.attributesName);
-       radioItem1=findViewById(R.id.radioItem1);
-       radioItem2=findViewById(R.id.radioItem2);
-       radioItem3=findViewById(R.id.radioItem3);
-       radioItem4=findViewById(R.id.radioItem4);
+        imageCapture=findViewById(R.id.imageView5);
 
-       horizontalScrollAttributesName=findViewById(R.id.horizontalScrollView3);
+        imageCapture.setImageBitmap(ImageModel.getImageBitmap());
+        attributesName=findViewById(R.id.attributesName);
+        radioItem1=findViewById(R.id.radioItem1);
+        radioItem2=findViewById(R.id.radioItem2);
+        radioItem3=findViewById(R.id.radioItem3);
+        radioItem4=findViewById(R.id.radioItem4);
+
+        horizontalScrollAttributesName=findViewById(R.id.horizontalScrollView3);
      // horizontalScrollAttributes.setVisibility(View.INVISIBLE);
 
 
-       horizontalScrollAttributesType=findViewById(R.id.horizontalScrollView4);
-       horizontalScrollAttributesType.setVisibility(View.INVISIBLE);
+        horizontalScrollAttributesType=findViewById(R.id.horizontalScrollView4);
+        horizontalScrollAttributesType.setVisibility(View.INVISIBLE);
 
-       attributesName.setVisibility(View.INVISIBLE);
+        attributesName.setVisibility(View.INVISIBLE);
 
-       item1=findViewById(R.id.item1);
-       item1.setVisibility(View.INVISIBLE);
-       item2=findViewById(R.id.item2);
-       item2.setVisibility(View.INVISIBLE);
-       item3=findViewById(R.id.item3);
-       item3.setVisibility(View.INVISIBLE);
-       item4=findViewById(R.id.item4);
-       item4.setVisibility(View.INVISIBLE);
+        item1=findViewById(R.id.item1);
+        item1.setVisibility(View.INVISIBLE);
+        item2=findViewById(R.id.item2);
+        item2.setVisibility(View.INVISIBLE);
+        item3=findViewById(R.id.item3);
+        item3.setVisibility(View.INVISIBLE);
+        item4=findViewById(R.id.item4);
+        item4.setVisibility(View.INVISIBLE);
 
 
 
-       item1.setText(getProductName().get(0));
+       item1.setText(GetRecognitionResponseModel.getAttributesName().get(0));
        item1.setVisibility(View.VISIBLE);
-       item2.setText(getProductName().get(1));
-       item2.setVisibility(View.VISIBLE);
-       item3.setText(getProductName().get(2));
-       item3.setVisibility(View.VISIBLE);
+ //      item2.setText(getProductName().get(1));
+     //  item2.setVisibility(View.VISIBLE);
+     //  item3.setText(getProductName().get(2));
+     //  item3.setVisibility(View.VISIBLE);
 
 
 
@@ -85,16 +83,11 @@ public class PostActivityAfterRecognition extends AppCompatActivity {
         ll.addView(myButton, lp);
 */
 
-  /*      Button button = new Button(this);
-        button.setText("Hello");
-        button.setId(20);
-        layout.addView(button);
-        set.connect(button.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 0);
-        set.connect(button.getId(),ConstraintSet.RIGHT,ConstraintSet.PARENT_ID,ConstraintSet.RIGHT,0);
-        set.connect(button.getId(),ConstraintSet.LEFT,ConstraintSet.PARENT_ID,ConstraintSet.LEFT,0);
-        set.constrainHeight(button.getId(), 200);
-        set.applyTo(layout);
-*/
+
+
+    }
+
+    public void postApi(View view) {
     }
 
     @SuppressLint("SetTextI18n")

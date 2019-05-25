@@ -1,18 +1,27 @@
 package com.example.vitelcoarge;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.example.vitelcoarge.Model.ImageModel;
 import com.example.vitelcoarge.Volley.PostImageRecognitionActivity;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
     private static final int MY_CAMERA_REQUEST_CODE = 100;
@@ -50,12 +59,40 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
               //  resim seçildiğinde yapılacaklar
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                Intent intent =new Intent(this, PostImageRecognitionActivity.class);
-                intent.putExtra("captureImage",photo);
-                startActivity(intent);
+                Bitmap bitmapFromCamera = (Bitmap) data.getExtras().get("data");
+                Intent intentFromCamera =new Intent(this, PostImageRecognitionActivity.class);
+                ImageModel.setImageBitmap(bitmapFromCamera);
+                startActivity(intentFromCamera);
                 finish();
             }
         }
+        if(requestCode==200){
+            if(resultCode==RESULT_OK) {
+                Uri pickedImage = data.getData();
+                // Let's read picked image path using content resolver
+                try {
+                    Bitmap bitmapFromPicked = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickedImage);
+                    Log.i("Bitmap on pick:", bitmapFromPicked.toString());
+                    ImageModel.setImageBitmap(bitmapFromPicked);
+                    Intent intentFromGallery = new Intent(this, PostImageRecognitionActivity.class);
+                    startActivity(intentFromGallery);
+                    finish();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
+
+    public void pickImageMethod(View view) {
+
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 200);
+    }
+
+
+
+
 }
