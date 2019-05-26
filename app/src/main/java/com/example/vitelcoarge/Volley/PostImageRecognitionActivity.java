@@ -109,7 +109,7 @@ public class PostImageRecognitionActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1NTg2MTQ3NjksImV4cCI6MTU1OTIxOTU2OSwiaWF0IjoxNTU4NjE0NzY5fQ.znN9GhxmbqI3fQg-pU7rZs4Hvy_TPV_cEd_OnvsIpRk");
+                headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1NTg3OTIyOTQsImV4cCI6MTU1OTM5NzA5NCwiaWF0IjoxNTU4NzkyMjk0fQ.p-dTUyW-Pib1MW2IdZ4yJ502VyGeXlHEwKat1dkqd5Y");
                 return headers;
             }
 

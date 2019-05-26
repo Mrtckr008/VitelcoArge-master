@@ -8,6 +8,37 @@
     android:background="@android:color/white"
     tools:context=".PostActivityAfterRecognition">
 
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="380dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="------------------------------------------------------------------------------------------------------------------"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView3" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="380dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="5dp"
+        android:text="------------------------------------------------------------------------------------------------------------------"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.388"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="376dp"
@@ -15,6 +46,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,12 +60,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="44dp"
-        android:onClick="postApi"
+        android:onClick="useGallery"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.76"
+        app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/post_icon_blue_" />
+        app:srcCompat="@drawable/pick_image" />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -40,22 +73,23 @@
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:onClick="takePicture"
         app:layout_constraintBottom_toBottomOf="@+id/imageView7"
         app:layout_constraintEnd_toStartOf="@+id/imageView7"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView7"
-        app:srcCompat="@drawable/refresh_icon_blue" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/camera_blue" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView3"
-        android:layout_width="371dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="300dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:foregroundGravity="fill_horizontal|center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5">
 
         <LinearLayout
@@ -116,27 +150,15 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <TextView
-        android:id="@+id/attributesName"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="18dp"
-        android:hint="Color:"
-        android:textColor="@android:color/black"
-        android:textColorHint="@android:color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView3" />
-
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView4"
-        android:layout_width="336dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="298dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/attributesName"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/horizontalScrollView3"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView3">
 
 
@@ -194,6 +216,62 @@
         </RadioGroup>
 
     </HorizontalScrollView>
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="68dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:onClick="submitProduct"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView7"
+        app:layout_constraintTop_toTopOf="@+id/imageView7"
+        app:srcCompat="@android:drawable/ic_menu_send" />
+
+    <TextView
+        android:id="@+id/productName"
+        style="@android:style/Widget.DeviceDefault.Light.TextView"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Product Name:"
+        android:textColor="@android:color/black"
+        android:textColorHighlight="@color/black_overlay"
+        android:textColorHint="@color/black_overlay"
+        app:layout_constraintEnd_toStartOf="@+id/horizontalScrollView3"
+        app:layout_constraintHorizontal_bias="0.583"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/horizontalScrollView3" />
+
+    <TextView
+        android:id="@+id/attributesName"
+        android:layout_width="75dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:text="Attributes Name:"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toStartOf="@+id/horizontalScrollView4"
+        app:layout_constraintHorizontal_bias="0.583"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/horizontalScrollView4" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="380dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="------------------------------------------------------------------------------------------------------------------"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView4" />
 
 
 </android.support.constraint.ConstraintLayout>

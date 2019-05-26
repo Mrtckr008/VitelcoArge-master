@@ -1,10 +1,15 @@
 package com.example.vitelcoarge;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.Image;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
@@ -19,10 +24,15 @@ import android.widget.TextView;
 
 import com.example.vitelcoarge.Model.GetRecognitionResponseModel;
 import com.example.vitelcoarge.Model.ImageModel;
+import com.example.vitelcoarge.Volley.PostImageRecognitionActivity;
+
+import java.io.IOException;
 
 import static com.example.vitelcoarge.Model.GetRecognitionResponseModel.attributesValue;
 import static com.example.vitelcoarge.Model.GetRecognitionResponseModel.getAttributesName;
 import static com.example.vitelcoarge.Model.GetRecognitionResponseModel.getProductName;
+import static com.example.vitelcoarge.Model.GetRecognitionResponseModel.productId;
+import static com.example.vitelcoarge.Model.GetRecognitionResponseModel.productName;
 
 public class PostActivityAfterRecognition extends AppCompatActivity {
 
@@ -51,7 +61,7 @@ public class PostActivityAfterRecognition extends AppCompatActivity {
 
 
         horizontalScrollAttributesType=findViewById(R.id.horizontalScrollView4);
-        horizontalScrollAttributesType.setVisibility(View.INVISIBLE);
+        //horizontalScrollAttributesType.setVisibility(View.INVISIBLE);
 
         attributesName.setVisibility(View.INVISIBLE);
 
@@ -65,43 +75,91 @@ public class PostActivityAfterRecognition extends AppCompatActivity {
         item4.setVisibility(View.INVISIBLE);
 
 
+        if(productName.size()==1){
+            item1.setText(GetRecognitionResponseModel.getProductName().get(0));
+            item1.setVisibility(View.VISIBLE);
+        }
+        else if(productName.size()==2){
+            item1.setText(GetRecognitionResponseModel.getProductName().get(0));
+            item1.setVisibility(View.VISIBLE);
+            item2.setText(GetRecognitionResponseModel.getProductName().get(1));
+            item2.setVisibility(View.VISIBLE);
+        }
+       else if(productName.size()==3){
+            item1.setText(GetRecognitionResponseModel.getProductName().get(0));
+            item1.setVisibility(View.VISIBLE);
+            item2.setText(GetRecognitionResponseModel.getProductName().get(1));
+            item2.setVisibility(View.VISIBLE);
+            item3.setText(GetRecognitionResponseModel.getProductName().get(2));
+            item3.setVisibility(View.VISIBLE);
+       }
+       else if(productName.size()==4){
+           item1.setText(GetRecognitionResponseModel.getProductName().get(0));
+           item1.setVisibility(View.VISIBLE);
+           item2.setText(GetRecognitionResponseModel.getProductName().get(1));
+           item2.setVisibility(View.VISIBLE);
+           item3.setText(GetRecognitionResponseModel.getProductName().get(2));
+           item3.setVisibility(View.VISIBLE);
+           item4.setText(GetRecognitionResponseModel.getProductName().get(3));
+           item4.setVisibility(View.VISIBLE);
+       }
+       else{}
 
-       item1.setText(GetRecognitionResponseModel.getAttributesName().get(0));
-       item1.setVisibility(View.VISIBLE);
- //      item2.setText(getProductName().get(1));
-     //  item2.setVisibility(View.VISIBLE);
-     //  item3.setText(getProductName().get(2));
-     //  item3.setVisibility(View.VISIBLE);
+       if(getAttributesName().size()==1){
+           radioItem1.setText(attributesValue.get(0));
+           radioItem2.setVisibility(View.INVISIBLE);
+           radioItem3.setVisibility(View.INVISIBLE);
+           radioItem4.setVisibility(View.INVISIBLE);
+       }
+       else if(getAttributesName().size()==2){
+           radioItem1.setText(attributesValue.get(0));
+           radioItem2.setText(attributesValue.get(1));
+           radioItem3.setVisibility(View.INVISIBLE);
+           radioItem4.setVisibility(View.INVISIBLE);
+       }
+       else if(getAttributesName().size()==3){
+           radioItem1.setText(attributesValue.get(0));
+           radioItem2.setText(attributesValue.get(1));
+           radioItem3.setText(attributesValue.get(2));
+           radioItem4.setVisibility(View.INVISIBLE);
+       }
+       else if(getAttributesName().size()==4){
+           radioItem1.setText(attributesValue.get(0));
+           radioItem2.setText(attributesValue.get(1));
+           radioItem3.setText(attributesValue.get(2));
+           radioItem4.setText(attributesValue.get(3));
+       }
 
 
 
-/*        Button myButton = new Button(this);
-        myButton.setText("Push Me");
+      // item3.setText(GetRecognitionResponseModel.getAttributesName().get(2));
+      // item3.setVisibility(View.VISIBLE);
 
-        ConstraintLayout ll = (ConstraintLayout)findViewById(R.id.post_activity);
-        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        ll.addView(myButton, lp);
-*/
+       horizontalScrollAttributesType.setVisibility(View.VISIBLE);
+       attributesName.setVisibility(View.VISIBLE);
+      // attributesName.setText(getAttributesName().get(0)+": ");
+       radioItem1.setText(attributesValue.get(0));
+
+       radioItem2.setText(attributesValue.get(1));
+       radioItem3.setVisibility(View.INVISIBLE);
+       radioItem4.setVisibility(View.INVISIBLE);
+       item1.setBackgroundColor(Color.parseColor("#5D96F3"));
+       item1.setSelected(true);
+       radioItem1.setChecked(true);
+
 
 
 
     }
 
     public void postApi(View view) {
+
     }
 
     @SuppressLint("SetTextI18n")
     public void selectedItem1(View view) {
-        horizontalScrollAttributesType.setVisibility(View.VISIBLE);
-        attributesName.setVisibility(View.VISIBLE);
-        attributesName.setText(getAttributesName().get(0)+": ");
-        radioItem1.setText(attributesValue.get(0));
-        radioItem2.setText(attributesValue.get(1));
-        radioItem3.setText(attributesValue.get(2));
-        radioItem4.setVisibility(View.INVISIBLE);
-        item1.setBackgroundColor(Color.parseColor("#5D96F3"));
 
-       // radioItem1.setText(GetRecognitionResponseModel.attributesValue.get(0));
+
 
     }
 
@@ -116,4 +174,51 @@ public class PostActivityAfterRecognition extends AppCompatActivity {
     public void selectedItem4(View view) {
         horizontalScrollAttributesType.setVisibility(View.VISIBLE);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 100) {
+            if (resultCode == RESULT_OK) {
+                //  resim seçildiğinde yapılacaklar
+                Bitmap bitmapFromCamera = (Bitmap) data.getExtras().get("data");
+                Intent intentFromCamera =new Intent(this, PostImageRecognitionActivity.class);
+                ImageModel.setImageBitmap(bitmapFromCamera);
+                startActivity(intentFromCamera);
+                finish();
+            }
+        }
+        if(requestCode==200){
+            if(resultCode==RESULT_OK) {
+                Uri pickedImage = data.getData();
+                // Let's read picked image path using content resolver
+                try {
+                    Bitmap bitmapFromPicked = MediaStore.Images.Media.getBitmap(this.getContentResolver(), pickedImage);
+                    Log.i("Bitmap on pick:", bitmapFromPicked.toString());
+                    ImageModel.setImageBitmap(bitmapFromPicked);
+                    Intent intentFromGallery = new Intent(this, PostImageRecognitionActivity.class);
+                    startActivity(intentFromGallery);
+                    finish();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void useGallery(View view) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), 200);
+    }
+
+    public void takePicture(View view) {
+        if (checkSelfPermission(Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            System.out.println();
+        }
+        else{
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, 100);
+        }}
 }

@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void pickImageMethod(View view) {
-
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
