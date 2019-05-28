@@ -2,9 +2,11 @@ package com.example.vitelcoarge.Volley;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -38,10 +40,12 @@ import java.util.Map;
 @SuppressLint("Registered")
 public class PostImageRecognitionActivity extends AppCompatActivity {
     public static JSONObject responseRecognition;
-
+public String tokenValue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        tokenValue= preferences.getString("savedToken", "-1");
         convertToBase64();
         PostImageVolley();
     }
@@ -72,6 +76,7 @@ public class PostImageRecognitionActivity extends AppCompatActivity {
                 url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
+
                 Log.i("Response", String.valueOf(response));
 
                 responseRecognition=response;
@@ -104,12 +109,14 @@ public class PostImageRecognitionActivity extends AppCompatActivity {
                         e2.printStackTrace();
                     }
                 }
+                Intent intent=new Intent(PostImageRecognitionActivity.this,PostTokenActivity.class);
+                startActivity(intent);
             }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1NTg3OTIyOTQsImV4cCI6MTU1OTM5NzA5NCwiaWF0IjoxNTU4NzkyMjk0fQ.p-dTUyW-Pib1MW2IdZ4yJ502VyGeXlHEwKat1dkqd5Y");
+                headers.put("Authorization", "Bearer "+ tokenValue);
                 return headers;
             }
 

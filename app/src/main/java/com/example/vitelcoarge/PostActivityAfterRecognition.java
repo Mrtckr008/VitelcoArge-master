@@ -25,6 +25,8 @@ import android.widget.TextView;
 import com.example.vitelcoarge.Model.GetRecognitionResponseModel;
 import com.example.vitelcoarge.Model.ImageModel;
 import com.example.vitelcoarge.Volley.PostImageRecognitionActivity;
+import com.example.vitelcoarge.Volley.PostSubmitActivity;
+
 
 import java.io.IOException;
 
@@ -153,7 +155,8 @@ public class PostActivityAfterRecognition extends AppCompatActivity {
     }
 
     public void postApi(View view) {
-
+    Intent intent=new Intent(PostActivityAfterRecognition.this, PostSubmitActivity.class);
+    startActivity(intent);
     }
 
     @SuppressLint("SetTextI18n")

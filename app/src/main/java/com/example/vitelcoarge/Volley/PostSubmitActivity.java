@@ -1,11 +1,11 @@
 package com.example.vitelcoarge.Volley;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -19,9 +19,8 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.vitelcoarge.Local.LocalDatabase;
-import com.example.vitelcoarge.MainActivity;
-import com.example.vitelcoarge.Model.GetTokenResponseModel;
 import com.example.vitelcoarge.Model.LoginModel;
+import com.example.vitelcoarge.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,25 +29,24 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PostTokenActivity extends AppCompatActivity implements IPostApi {
-public static JSONObject responseStaticApi;
-public String token;
-GetTokenResponseModel getResponseModel=new GetTokenResponseModel();
+public class PostSubmitActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        PostTokenVolley();
+        setContentView(R.layout.activity_main);
+        postSubmitVolley();
     }
 
-    @Override
-    public void PostTokenVolley() {
+    public void postSubmitVolley() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         final JSONObject jsonBodyObj = new JSONObject();
         String url = "http://imagereconginitonwebapi-dev.us-west-2.elasticbeanstalk.com/api/v1/Token/GetToken";
         try{
-            jsonBodyObj.put("username", LoginModel.getUsername());
-            jsonBodyObj.put("password",LoginModel.getPassword());
+            jsonBodyObj.put("ProductId", 2);
+            jsonBodyObj.put("Cost",0);
+            jsonBodyObj.put("SerialNumber","ABXDGFR");
+            jsonBodyObj.put("AttributeId",4);
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -58,17 +56,18 @@ GetTokenResponseModel getResponseModel=new GetTokenResponseModel();
                 url, null, new Response.Listener<JSONObject>(){
             @Override    public void onResponse(JSONObject response) {
                 Log.i("Response",String.valueOf(response));
-                responseStaticApi=response;
 
-                ResponseTokenJsonParse responseJsonParse=new ResponseTokenJsonParse(String.valueOf(responseStaticApi));
 
-         //       Log.i("son: ",responseJsonParse.getToken());
-                token=responseJsonParse.getToken();
+              ResponseSubmitProductJsonParse responseSubmitProductJsonParse=new ResponseSubmitProductJsonParse(response.toString());
 
-                    Intent intent=new Intent(PostTokenActivity.this, LocalDatabase.class);
-                intent.putExtra("tokenValue",token);
-                startActivity(intent);
-                finish();
+                      Log.i("son: ",response.toString());
+
+                Toast.makeText(getApplicationContext(), Html.fromHtml("<b>Submit is successful!</b>"), Toast.LENGTH_LONG).show();
+
+
+
+
+
             }
         }, new Response.ErrorListener() {
             @Override    public void onErrorResponse(VolleyError error) {
@@ -105,19 +104,5 @@ GetTokenResponseModel getResponseModel=new GetTokenResponseModel();
         };
         requestQueue.add(jsonObjectRequest);
         return;
-    }
-
-    @Override
-    public void saveToken(String token) {
-             SharedPreferences sharedPreferences=this.getSharedPreferences("com.example.vitelcoarge.LoginController", Context.MODE_PRIVATE);
-
-        SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putString("token",getResponseModel.getToken()).apply();
-        editor.commit();
-
-
-        Intent intent =new Intent(PostTokenActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

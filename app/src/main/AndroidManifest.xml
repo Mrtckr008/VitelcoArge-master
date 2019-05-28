@@ -4,8 +4,9 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PostActivityAfterRecognition"></activity>
+        <activity android:name=".Volley.PostSubmitActivity"></activity>
+        <activity android:name=".PostActivityAfterRecognition" />
         <activity android:name=".LoginController.LoginActivity" />
         <activity android:name=".UI.SplashActivity">
             <intent-filter>
@@ -28,8 +30,7 @@
         <activity android:name=".Volley.PostTokenActivity" />
         <activity android:name=".Volley.PostImageRecognitionActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginController.LoginControlActivity">
-        </activity>
+        <activity android:name=".LoginController.LoginControlActivity"></activity>
 
         <meta-data
             android:name="preloaded_fonts"
