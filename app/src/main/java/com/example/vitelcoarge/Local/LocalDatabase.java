@@ -12,7 +12,7 @@ import com.example.vitelcoarge.Model.GetTokenResponseModel;
 
 public class LocalDatabase extends AppCompatActivity {
 
-    GetTokenResponseModel getResponseModel=new GetTokenResponseModel();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class LocalDatabase extends AppCompatActivity {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("savedToken", getResponseModel.getToken()).apply();
+        editor.putString("savedToken", tokenValue).apply();
         editor.commit();
 
         Log.i("savedTokenn:", tokenValue);

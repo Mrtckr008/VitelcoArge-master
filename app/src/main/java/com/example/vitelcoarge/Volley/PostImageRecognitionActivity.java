@@ -44,8 +44,6 @@ public String tokenValue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        tokenValue= preferences.getString("savedToken", "-1");
         convertToBase64();
         PostImageVolley();
     }
@@ -109,14 +107,12 @@ public String tokenValue;
                         e2.printStackTrace();
                     }
                 }
-                Intent intent=new Intent(PostImageRecognitionActivity.this,PostTokenActivity.class);
-                startActivity(intent);
             }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer "+ tokenValue);
+                headers.put("Authorization", "Bearer "+ "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEiLCJuYmYiOjE1NTkwNjAwMzAsImV4cCI6MTU1OTY2NDgzMCwiaWF0IjoxNTU5MDYwMDMwfQ.AKl6fAhgRG3KGmZBHRFV0KpZ3n3I3nUQs0J66Hfc83I");
                 return headers;
             }
 

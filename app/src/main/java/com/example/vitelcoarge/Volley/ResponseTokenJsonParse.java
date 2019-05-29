@@ -18,7 +18,7 @@ public class ResponseTokenJsonParse extends GetTokenResponseModel {
     private static String responseErrorCode;
     private static String responseErrorMessage;
     private static Integer responseId,responseIsSucess;
- //   PostTokenActivity postTokenActivity=new PostTokenActivity();
+
 
 
 
@@ -72,8 +72,5 @@ public class ResponseTokenJsonParse extends GetTokenResponseModel {
             e.printStackTrace();
         }
 
-
-
-      //  Intent intent=new Intent(R, LocalDatabase.class);
     }
 }
